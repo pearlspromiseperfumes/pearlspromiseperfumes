@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pearls Promise - Luxury Perfumes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #3d3d3d;
+        }
+
+        header {
+            background: linear-gradient(135deg, #FBEFEF 0%, #F5E6E8 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(200, 100, 120, 0.15);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #C97A8B, #D9899A);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #C97A8B;
+            text-decoration: none;
+            transition: color 0.3s, border-bottom 0.3s;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 0.3rem;
+        }
+
+        nav a:hover {
+            color: #E8B4C4;
+            border-bottom: 2px solid #E8B4C4;
+        }
+
+        nav a.active {
+            color: #D9899A;
+            border-bottom: 2px solid #D9899A;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #FBEFEF 0%, #FDF7F7 100%);
+            color: #5D3D4F;
+            padding: 8rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '💎';
+            position: absolute;
+            top: 10%;
+            right: 5%;
+            font-size: 150px;
+            opacity: 0.12;
+            z-index: 1;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '✨';
+            position: absolute;
+            bottom: 10%;
+            left: 5%;
+            font-size: 120px;
+            opacity: 0.12;
+            z-index: 1;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #C97A8B;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #D9899A;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #C97A8B, #D9899A);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s;
+            border: 2px solid #C97A8B;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(201, 122, 139, 0.3);
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: #C97A8B;
+            box-shadow: 0 4px 20px rgba(201, 122, 139, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #C97A8B;
+            border: 2px solid #C97A8B;
+            margin-left: 1rem;
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #C97A8B, #D9899A);
+            color: white;
+            box-shadow: 0 4px 20px rgba(201, 122, 139, 0.5);
+        }
+
+        section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #C97A8B;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(201, 122, 139, 0.12);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid #FBEFEF;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(201, 122, 139, 0.2);
+            border-color: #F5E6E8;
+        }
+
+        .product-image {
+            height: 250px;
+            background: linear-gradient(135deg, #FBEFEF 0%, #FDF7F7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+        }
+
+        .product-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.7), transparent);
+            pointer-events: none;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #C97A8B;
+        }
+
+        .product-desc {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: #D9899A;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        #products {
+            background: linear-gradient(to bottom, #FEFCFC, #FDF9FB);
+        }
+
+        #about {
+            background: white;
+        }
+
+        .learn-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .learn-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(201, 122, 139, 0.12);
+            border-left: 4px solid #C97A8B;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .learn-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(201, 122, 139, 0.2);
+        }
+
+        .learn-card h3 {
+            color: #C97A8B;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .learn-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        #learn {
+            background: linear-gradient(to bottom, #FEFCFC, #FDF9FB);
+        }
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #C97A8B;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            height: 400px;
+            background: linear-gradient(135deg, #FBEFEF 0%, #FDF7F7 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            position: relative;
+            box-shadow: 0 8px 30px rgba(201, 122, 139, 0.15);
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), transparent);
+            border-radius: 15px;
+            pointer-events: none;
+        }
+
+        #contact {
+            background: linear-gradient(135deg, #C97A8B 0%, #D9899A 100%);
+            color: white;
+            text-align: center;
+        }
+
+        #contact .section-title {
+            color: white;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            border: 2px solid rgba(255, 239, 239, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-item h3 {
+            margin-bottom: 0.5rem;
+            color: #FBEFEF;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            text-align: left;
+        }
+
+        form input,
+        form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 2px solid rgba(255, 239, 239, 0.4);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.12);
+            color: white;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        form input:focus,
+        form textarea:focus {
+            outline: none;
+            border-color: #FBEFEF;
+            background: rgba(255,255,255,0.2);
+        }
+
+        form input::placeholder,
+        form textarea::placeholder {
+            color: #eee;
+        }
+
+        form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        footer {
+            background: #A85A73;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 4rem 1rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">✨ Pearls Promise Perfumes</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#learn">Learn More</a></li>
+                <li><a href="#order">Order</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Discover Pearls' Promise of Elegance</h1>
+            <p>Luxury perfumes inspired by the lustrous beauty and timeless sophistication of pearls</p>
+            <button class="btn">Shop Now</button>
+            <button class="btn btn-secondary"><a href="#learn" style="color: inherit; text-decoration: none;">Learn More</a></button>
+        </div>
+    </section>
+
+    <section id="products">
+        <h2 class="section-title">Our Pearl Collections</h2>
+        <div class="products">
+            <div class="product-card">
+                <div class="product-image">💎</div>
+                <div class="product-info">
+                    <h3 class="product-name">Opalescent Dream</h3>
+                    <p class="product-desc">Luminous blend of iris, white musk, and soft vanilla</p>
+                    <p class="product-price">$99.99</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">✨</div>
+                <div class="product-info">
+                    <h3 class="product-name">Silver Lining</h3>
+                    <p class="product-desc">Fresh citrus meets creamy coconut with pearlescent grace</p>
+                    <p class="product-price">$89.99</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">🌙</div>
+                <div class="product-info">
+                    <h3 class="product-name">Moonlit Pearl</h3>
+                    <p class="product-desc">Sophisticated notes of gardenia, silk musk, and sandalwood</p>
+                    <p class="product-price">$94.99</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">🌊</div>
+                <div class="product-info">
+                    <h3 class="product-name">Ocean's Treasure</h3>
+                    <p class="product-desc">Aquatic elegance with sea salt, amber, and white tea</p>
+                    <p class="product-price">$84.99</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">🦪</div>
+                <div class="product-info">
+                    <h3 class="product-name">Lustrous Bloom</h3>
+                    <p class="product-desc">Delicate florals with peony, magnolia, and soft musk</p>
+                    <p class="product-price">$89.99</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">💫</div>
+                <div class="product-info">
+                    <h3 class="product-name">Radiant Essence</h3>
+                    <p class="product-desc">Timeless elegance blending rose, oud, and pearl musk</p>
+                    <p class="product-price">$104.99</p>
+                    <button class="btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>About Pearls Promise Perfumes</h2>
+                <p>Founded in 2016, Pearls Promise celebrates the timeless allure of pearls through exquisite fragrances that capture light, elegance, and sophistication in every bottle.</p>
+                <p>Our inspiration comes from the ocean's most precious gems—pearls that transform ordinary shells into lustrous treasures. Each fragrance is meticulously crafted to evoke the radiance and grace that pearls have symbolized throughout history.</p>
+                <p>We blend rare ingredients with precious accords to create scents that shine with quiet confidence and refined beauty. Pearls Promise is for those who understand that true elegance whispers rather than shouts, and radiates from within.</p>
+                <button class="btn">Explore Our Story</button>
+            </div>
+            <div class="about-image">🦪</div>
+        </div>
+    </section>
+
+    <section id="learn">
+        <h2 class="section-title">The Art of Perfumery</h2>
+        <div class="learn-content">
+            <div class="learn-card">
+                <h3>🌿 Our Ingredients</h3>
+                <p>We source the finest botanical essences from around the world. Each ingredient is carefully selected for its quality, purity, and ability to harmonize with our pearl-inspired compositions. Our fragrances feature rare notes like oud, sandalwood, jasmine, and gardenia—the noble ingredients of luxury perfumery.</p>
+            </div>
+
+            <div class="learn-card">
+                <h3>🔬 The Crafting Process</h3>
+                <p>Every Pearls Promise fragrance undergoes a meticulous creation process. Our master perfumers blend ingredients in precise ratios, allowing the composition to mature and evolve. This traditional method ensures that each bottle contains a perfectly balanced and sophisticated scent that unfolds beautifully on the skin.</p>
+            </div>
+
+            <div class="learn-card">
+                <h3>💎 Fragrance Notes</h3>
+                <p>Perfumes are composed of three layers of notes: top notes that greet you immediately, heart notes that emerge after a few minutes, and base notes that linger for hours. Our perfumers carefully orchestrate these notes to create a harmonious journey that reflects the elegance of pearls.</p>
+            </div>
+
+            <div class="learn-card">
+                <h3>✨ The Pearl Connection</h3>
+                <p>Just as pearls develop from simple irritants into lustrous gems, our fragrances transform ordinary moments into extraordinary memories. Each scent tells a story of transformation, elegance, and timeless beauty—qualities that define both pearls and Pearls Promise Perfumes.</p>
+            </div>
+
+            <div class="learn-card">
+                <h3>🌍 Sustainability</h3>
+                <p>We are committed to sustainable practices in sourcing our ingredients and creating our packaging. Our bottles are made with recycled glass, and we partner with suppliers who maintain ethical standards. Luxury should never come at the cost of our planet.</p>
+            </div>
+
+            <div class="learn-card">
+                <h3>🎁 Wearing Your Fragrance</h3>
+                <p>To get the most from your Pearls Promise fragrance, apply to pulse points: wrists, neck, and behind ears. The warmth of these areas helps diffuse the scent throughout the day. For layering, try our complementary body lotions to enhance and extend the fragrance's longevity.</p>
+            </div>
+        </div>
+    </section>
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <h3>📍 Location</h3>
+                <p>789 Lustre Avenue<br>Monaco, MC 98000</p>
+            </div>
+            <div class="contact-item">
+                <h3>📞 Phone</h3>
+                <p>+377 93 15 50 00</p>
+            </div>
+            <div class="contact-item">
+                <h3>✉️ Email</h3>
+                <p>hello@pearluminescence.com</p>
+            </div>
+        </div>
+        <form id="contactForm">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Your Email" required>
+            <textarea id="message" placeholder="Your Message" required></textarea>
+            <button type="submit" class="btn">Send Message</button>
+            <p id="formMessage" style="margin-top: 1rem; text-align: center; min-height: 20px;"></p>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Pearls Promise Perfumes. All rights reserved. | Where elegance meets radiance.</p>
+    </footer>
+
+    <script>
+        // Navigation link activation
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').slice(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Contact form email functionality
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const formMessage = document.getElementById('formMessage');
+            
+            // Create the email body
+            const emailBody = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+            
+            // Use mailto link to send email
+            const mailtoLink = `mailto:pearlspromiseperfumes@gmail.com?subject=Contact Form Submission from ${encodeURIComponent(name)}&body=${encodeURIComponent(emailBody)}`;
+            
+            // Show success message
+            formMessage.textContent = '✓ Opening your email client...';
+            formMessage.style.color = '#D9899A';
+            
+            // Open mailto
+            window.location.href = mailtoLink;
+            
+            // Reset form after a delay
+            setTimeout(() => {
+                document.getElementById('contactForm').reset();
+                formMessage.textContent = 'Please complete sending the email in your email client.';
+                formMessage.style.color = '#C97A8B';
+                
+                setTimeout(() => {
+                    formMessage.textContent = '';
+                }, 5000);
+            }, 500);
+        });
+    </script>
+</body>
+</html>
